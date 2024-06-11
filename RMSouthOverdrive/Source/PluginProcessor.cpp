@@ -29,6 +29,21 @@ float RMSouthOverdriveAudioProcessor::hardClipping(float x)
     else return x;
 }
 
+// Diode Clipping
+float RMSouthOverdriveAudioProcessor::diodeClipping(float x) {
+    const float threshold = 0.6f; // Tensione di soglia di un diodo al silicio
+    if (x > threshold) return threshold;
+    else if (x < -threshold) return -threshold;
+    else return x - (std::pow(x, 3) / 3);
+}
+
+// Combined Clipping
+float RMSouthOverdriveAudioProcessor::combinedClipping(float x) {
+    float softClipped = softClipping(x);
+    return hardClipping(softClipped);
+}
+
+
 // Saturation Function
 float RMSouthOverdriveAudioProcessor::saturation(float x)
 {
@@ -78,6 +93,7 @@ RMSouthOverdriveAudioProcessor::~RMSouthOverdriveAudioProcessor()
     delete bass;
     delete mid;
     delete treble;
+    
 }
 
 
@@ -159,10 +175,11 @@ void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int sample
     eqChain.prepare(spec);
     highPassFilter.prepare(spec);
     lowPassFilter.prepare(spec);
+    convolutionProcessor.prepare(spec);
 
     // Imposta i coefficienti del filtro
-    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 40.0f);
-    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 20000.0f);
+    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 75.0f);
+    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 10000.0f);
 
     updateFilterCoefficients();
 }
@@ -171,8 +188,6 @@ void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int sample
 // PAUSE/STOP CONFIG
 void RMSouthOverdriveAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
 }
 
 
@@ -190,43 +205,37 @@ bool RMSouthOverdriveAudioProcessor::isBusesLayoutSupported(const BusesLayout& l
 }
 
 
-
-// PROCESS CONFIG
-void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
-{
+// NEW PROCESS BLOCK
+void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     auto numSamples = buffer.getNumSamples();
 
-    // Clears any unused channels just in case
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
         buffer.clear(i, 0, numSamples);
     }
 
-    // Process input with distortion
     if (totalNumInputChannels > 0 && totalNumOutputChannels > 1) {
         auto* inputChannelData = buffer.getReadPointer(0);
         auto* leftOutputChannelData = buffer.getWritePointer(0);
         auto* rightOutputChannelData = buffer.getWritePointer(1);
-        
-        // Apply a power function to the output volume for finer control at lower values
-        float adjustedOutputVolume = std::pow(*outputVolume, 5.0f); // Power of 2, you can adjust this value
 
+        float adjustedOutputVolume = std::pow(*outputVolume, 5.0f);
 
         for (int sample = 0; sample < numSamples; ++sample) {
             float cleanSignal = inputChannelData[sample];
 
             // First stage of distortion
             float gainStage1 = cleanSignal * *drive;
-            float clippedSignal1 = softClipping(gainStage1);
+            float clippedSignal1 = combinedClipping(gainStage1);
 
             // Smoothing between stages
             float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSample, 0.1f);
 
             // Second stage of distortion
             float gainStage2 = smoothedSignal1 * *drive;
-            float clippedSignal2 = saturation(gainStage2);
+            float clippedSignal2 = diodeClipping(gainStage2);
 
             // Smoothing between stages
             float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSample, 0.1f);
@@ -235,26 +244,42 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
             float gainStage3 = smoothedSignal2 * *drive;
             float clippedSignal3 = hardClipping(gainStage3);
 
+            // Apply low-pass filter TO REMOVE
+            float filteredSignal = clippedSignal3;
+
             // Apply adjusted output volume
-            float processedSignal = clippedSignal3 * adjustedOutputVolume;
+            float processedSignal = filteredSignal * adjustedOutputVolume;
 
             // Duplicate processed signal to both output channels
             leftOutputChannelData[sample] = processedSignal;
             rightOutputChannelData[sample] = processedSignal;
         }
-        
-        // Applica i filtri high-pass e low-pass
+
         applyFilter(buffer);
-
-        // Create a new audio block from the buffer
+        
+        // Process IR convolution
         juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::ProcessContextReplacing<float> context(block);
+        convolutionProcessor.process(context);
 
-        // Apply EQ to the processed buffer
         eqChain.process(juce::dsp::ProcessContextReplacing<float>(block));
     }
 }
 
-
+//LOAD IMPULSE RESPONSE
+void RMSouthOverdriveAudioProcessor::loadImpulseResponse()
+{
+    juce::FileChooser chooser("Select an Impulse Response File", {}, "*.wav");
+    chooser.launchAsync(juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles,
+        [this](const juce::FileChooser& fc)
+        {
+            auto result = fc.getResult();
+            if (result.existsAsFile())
+            {
+                convolutionProcessor.loadImpulseResponse(result, juce::dsp::Convolution::Stereo::yes, juce::dsp::Convolution::Trim::yes, 0, juce::dsp::Convolution::Normalise::yes);
+            }
+        });
+}
 
 void RMSouthOverdriveAudioProcessor::updateFilterCoefficients()
 {
@@ -265,22 +290,22 @@ void RMSouthOverdriveAudioProcessor::updateFilterCoefficients()
     float adjustedMid = *mid * std::abs(*mid) / 5.0f;
     float adjustedTreble = *treble * std::abs(*treble) / 5.0f;
 
-    // BASS (Low Shelf Filter)
+    // BASS (Peak Filter)
     float bassGainDB = adjustedBass;  // ±5 dB range
     DBG("Bass Gain (dB): " << bassGainDB);
-    auto bassCoefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 30.0f, 1.0f, std::pow(10.0f, bassGainDB / 20.0f));
+    auto bassCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 100.0f, 0.707f, std::pow(10.0f, bassGainDB / 20.0f));
     *eqChain.get<0>().state = *bassCoefficients;
 
     // MID (Peaking Filter)
     float midGainDB = adjustedMid;  // ±5 dB range
     DBG("Mid Gain (dB): " << midGainDB);
-    auto midCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 650.0f, 1.0f, std::pow(10.0f, midGainDB / 20.0f));
+    auto midCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 650.0f, 0.707f, std::pow(10.0f, midGainDB / 20.0f));
     *eqChain.get<1>().state = *midCoefficients;
 
-    // TREBLE (High Shelf Filter)
+    // TREBLE (Peak Filter)
     float trebleGainDB = adjustedTreble;  // ±5 dB range
     DBG("Treble Gain (dB): " << trebleGainDB);
-    auto trebleCoefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 10000.0f, 1.0f, std::pow(10.0f, trebleGainDB / 20.0f));
+    auto trebleCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 2800.0f, 0.707f, std::pow(10.0f, trebleGainDB / 20.0f));
     *eqChain.get<2>().state = *trebleCoefficients;
 }
 

@@ -58,12 +58,17 @@ public:
     
     // Sample for Smoothing Filter
     float prevSample;  // Variabile membro per il filtro di smoothing    
+    
+    //Load Impulse Response
+    void loadImpulseResponse();
 
     
 private:
     // Functions and Filters
     float softClipping(float x);
     float hardClipping(float x);
+    float combinedClipping(float x);
+    float diodeClipping(float x);
     float saturation(float x);
     float smoothingFilter(float currentSample, float& prevSample, float smoothingFactor);
     void applyFilter(juce::AudioBuffer<float>& buffer);
@@ -72,6 +77,8 @@ private:
     using Filter = juce::dsp::IIR::Filter<float>;
     using Coefficients = juce::dsp::IIR::Coefficients<float>;
     using FilterDuplicator = juce::dsp::ProcessorDuplicator<Filter, Coefficients>;
+    
+    juce::dsp::Convolution convolutionProcessor;
 
     FilterDuplicator highPassFilter;
     FilterDuplicator lowPassFilter;

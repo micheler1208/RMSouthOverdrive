@@ -42,6 +42,9 @@ private:
     juce::Slider trebleSlider;
     juce::Slider outputVolumeSlider;
     
+    //LOAD IR BUTTON
+    juce::TextButton loadIRButton;
+    
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RMSouthOverdriveAudioProcessorEditor)
