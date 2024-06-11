@@ -1,34 +1,35 @@
 /*
   ==============================================================================
 
-    This file contains the basic framework code for a JUCE plugin editor.
+    PluginEditor.h
+    Author:  micheler1208
 
   ==============================================================================
 */
 
 #pragma once
 #include <JuceHeader.h>
-#include "CustomLookAndFeel.h"
+#include "UI/CustomLookAndFeel.h"
 #include "PluginProcessor.h"
 
-class RM5150HarmonicEnhancerAudioProcessorEditor  : public juce::AudioProcessorEditor,
+class RMSouthOverdriveAudioProcessorEditor  : public juce::AudioProcessorEditor,
                                                     private juce::Slider::Listener  
 {
 public:
     // CONSTRUCTOR AND DESTRUCTOR
-    RM5150HarmonicEnhancerAudioProcessorEditor (RM5150HarmonicEnhancerAudioProcessor&);
-    ~RM5150HarmonicEnhancerAudioProcessorEditor() override;
+    RMSouthOverdriveAudioProcessorEditor (RMSouthOverdriveAudioProcessor&);
+    ~RMSouthOverdriveAudioProcessorEditor() override;
 
     
     void paint (juce::Graphics&) override;
     void resized() override;
     void sliderValueChanged(juce::Slider* slider) override;
-    void RM5150HarmonicEnhancerAudioProcessorEditor::drawLabelledSlider(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& name, juce::Slider& slider);
+    void RMSouthOverdriveAudioProcessorEditor::drawLabelledSlider(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& name, juce::Slider& slider);
 
 private:
 
     // PROCESSOR
-    RM5150HarmonicEnhancerAudioProcessor& audioProcessor;
+    RMSouthOverdriveAudioProcessor& audioProcessor;
     
     // IMAGES
     juce::Image backgroundImage;
@@ -43,5 +44,5 @@ private:
     
     
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RM5150HarmonicEnhancerAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RMSouthOverdriveAudioProcessorEditor)
 };

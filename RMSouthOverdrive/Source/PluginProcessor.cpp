@@ -1,7 +1,8 @@
 /*
   ==============================================================================
 
-    RM5150 - PROCESSOR
+    PluginProcessor.cpp
+    Author:  micheler1208
 
   ==============================================================================
 */
@@ -11,13 +12,13 @@
 #include <cmath>
 
 // Soft Clipping Function
-float RM5150HarmonicEnhancerAudioProcessor::softClipping(float x)
+float RMSouthOverdriveAudioProcessor::softClipping(float x)
 {
     return (3.0f / 2.0f) * x - (1.0f / 2.0f) * x * x * x;
 }
 
 // Hard Clipping Function
-float RM5150HarmonicEnhancerAudioProcessor::hardClipping(float x)
+float RMSouthOverdriveAudioProcessor::hardClipping(float x)
 {
     if (x > 1.0f) return 1.0f;
     else if (x < -1.0f) return -1.0f;
@@ -25,13 +26,13 @@ float RM5150HarmonicEnhancerAudioProcessor::hardClipping(float x)
 }
 
 // Saturation Function
-float RM5150HarmonicEnhancerAudioProcessor::saturation(float x)
+float RMSouthOverdriveAudioProcessor::saturation(float x)
 {
     return tanh(x);
 }
 
 // Smoothing Filter
-float RM5150HarmonicEnhancerAudioProcessor::smoothingFilter(float currentSample, float& prevSample, float smoothingFactor)
+float RMSouthOverdriveAudioProcessor::smoothingFilter(float currentSample, float& prevSample, float smoothingFactor)
 {
     float smoothedSample = smoothingFactor * prevSample + (1.0f - smoothingFactor) * currentSample;
     prevSample = smoothedSample;
@@ -40,7 +41,7 @@ float RM5150HarmonicEnhancerAudioProcessor::smoothingFilter(float currentSample,
 
 
 // Funzione per applicare i filtri
-void RM5150HarmonicEnhancerAudioProcessor::applyFilter(juce::AudioBuffer<float>& buffer)
+void RMSouthOverdriveAudioProcessor::applyFilter(juce::AudioBuffer<float>& buffer)
 {
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
@@ -50,7 +51,7 @@ void RM5150HarmonicEnhancerAudioProcessor::applyFilter(juce::AudioBuffer<float>&
 
 
 // CONSTRUCTOR
-RM5150HarmonicEnhancerAudioProcessor::RM5150HarmonicEnhancerAudioProcessor()
+RMSouthOverdriveAudioProcessor::RMSouthOverdriveAudioProcessor()
      : AudioProcessor (BusesProperties()
                        .withInput("Input", juce::AudioChannelSet::mono(), true)
                        .withOutput("Output", juce::AudioChannelSet::stereo(), true))
@@ -66,7 +67,7 @@ RM5150HarmonicEnhancerAudioProcessor::RM5150HarmonicEnhancerAudioProcessor()
 
 
 // DESTRUCTOR
-RM5150HarmonicEnhancerAudioProcessor::~RM5150HarmonicEnhancerAudioProcessor()
+RMSouthOverdriveAudioProcessor::~RMSouthOverdriveAudioProcessor()
 {
     delete drive;
     delete outputVolume;
@@ -77,13 +78,13 @@ RM5150HarmonicEnhancerAudioProcessor::~RM5150HarmonicEnhancerAudioProcessor()
 
 
 // GET NAME
-const juce::String RM5150HarmonicEnhancerAudioProcessor::getName() const
+const juce::String RMSouthOverdriveAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
 // MIDI CONFIG
-bool RM5150HarmonicEnhancerAudioProcessor::acceptsMidi() const
+bool RMSouthOverdriveAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -92,7 +93,7 @@ bool RM5150HarmonicEnhancerAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool RM5150HarmonicEnhancerAudioProcessor::producesMidi() const
+bool RMSouthOverdriveAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -101,7 +102,7 @@ bool RM5150HarmonicEnhancerAudioProcessor::producesMidi() const
    #endif
 }
 
-bool RM5150HarmonicEnhancerAudioProcessor::isMidiEffect() const
+bool RMSouthOverdriveAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -111,40 +112,40 @@ bool RM5150HarmonicEnhancerAudioProcessor::isMidiEffect() const
 }
 
 // TAIL AUDIO CONFIG
-double RM5150HarmonicEnhancerAudioProcessor::getTailLengthSeconds() const
+double RMSouthOverdriveAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
 // PROGRAM CONFIG
-int RM5150HarmonicEnhancerAudioProcessor::getNumPrograms()
+int RMSouthOverdriveAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int RM5150HarmonicEnhancerAudioProcessor::getCurrentProgram()
+int RMSouthOverdriveAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void RM5150HarmonicEnhancerAudioProcessor::setCurrentProgram (int index)
+void RMSouthOverdriveAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const juce::String RM5150HarmonicEnhancerAudioProcessor::getProgramName (int index)
+const juce::String RMSouthOverdriveAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void RM5150HarmonicEnhancerAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void RMSouthOverdriveAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
 
 
 
 // INITIALIZATION CONFIG
-void RM5150HarmonicEnhancerAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     juce::dsp::ProcessSpec spec;
     spec.sampleRate = sampleRate;
@@ -164,7 +165,7 @@ void RM5150HarmonicEnhancerAudioProcessor::prepareToPlay(double sampleRate, int 
 
 
 // PAUSE/STOP CONFIG
-void RM5150HarmonicEnhancerAudioProcessor::releaseResources()
+void RMSouthOverdriveAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
@@ -172,7 +173,7 @@ void RM5150HarmonicEnhancerAudioProcessor::releaseResources()
 
 
 // OUTPUT CHANNELS CONFIG
-bool RM5150HarmonicEnhancerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+bool RMSouthOverdriveAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
     if (layouts.getMainInputChannelSet() != juce::AudioChannelSet::mono()
         && layouts.getMainInputChannelSet() != juce::AudioChannelSet::stereo())
@@ -187,7 +188,7 @@ bool RM5150HarmonicEnhancerAudioProcessor::isBusesLayoutSupported(const BusesLay
 
 
 // PROCESS CONFIG
-void RM5150HarmonicEnhancerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
@@ -251,7 +252,7 @@ void RM5150HarmonicEnhancerAudioProcessor::processBlock(juce::AudioBuffer<float>
 
 
 
-void RM5150HarmonicEnhancerAudioProcessor::updateFilterCoefficients()
+void RMSouthOverdriveAudioProcessor::updateFilterCoefficients()
 {
     auto sampleRate = getSampleRate();
 
@@ -284,50 +285,50 @@ void RM5150HarmonicEnhancerAudioProcessor::updateFilterCoefficients()
 
 
 //GRAPHIC EDITOR CONFIG
-bool RM5150HarmonicEnhancerAudioProcessor::hasEditor() const
+bool RMSouthOverdriveAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* RM5150HarmonicEnhancerAudioProcessor::createEditor()
+juce::AudioProcessorEditor* RMSouthOverdriveAudioProcessor::createEditor()
 {
-    return new RM5150HarmonicEnhancerAudioProcessorEditor (*this);
+    return new RMSouthOverdriveAudioProcessorEditor (*this);
 }
 
 // LOAD AND SAVE STATE CONFIG
-void RM5150HarmonicEnhancerAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void RMSouthOverdriveAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void RM5150HarmonicEnhancerAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void RMSouthOverdriveAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 }
 
 // GETTER AND SETTER
-float RM5150HarmonicEnhancerAudioProcessor::getDrive() const { return *drive; }
-void RM5150HarmonicEnhancerAudioProcessor::setDrive(float newDrive) { *drive = newDrive; }
+float RMSouthOverdriveAudioProcessor::getDrive() const { return *drive; }
+void RMSouthOverdriveAudioProcessor::setDrive(float newDrive) { *drive = newDrive; }
 
-float RM5150HarmonicEnhancerAudioProcessor::getOutputVolume() const { return *outputVolume; }
-void RM5150HarmonicEnhancerAudioProcessor::setOutputVolume(float newVolume) { *outputVolume = newVolume; }
+float RMSouthOverdriveAudioProcessor::getOutputVolume() const { return *outputVolume; }
+void RMSouthOverdriveAudioProcessor::setOutputVolume(float newVolume) { *outputVolume = newVolume; }
 
-float RM5150HarmonicEnhancerAudioProcessor::getBass() const { return *bass; }
-void RM5150HarmonicEnhancerAudioProcessor::setBass(float newBass) { *bass = newBass; }
+float RMSouthOverdriveAudioProcessor::getBass() const { return *bass; }
+void RMSouthOverdriveAudioProcessor::setBass(float newBass) { *bass = newBass; }
 
-float RM5150HarmonicEnhancerAudioProcessor::getMid() const { return *mid; }
-void RM5150HarmonicEnhancerAudioProcessor::setMid(float newMid) { *mid = newMid; }
+float RMSouthOverdriveAudioProcessor::getMid() const { return *mid; }
+void RMSouthOverdriveAudioProcessor::setMid(float newMid) { *mid = newMid; }
 
-float RM5150HarmonicEnhancerAudioProcessor::getTreble() const { return *treble; }
-void RM5150HarmonicEnhancerAudioProcessor::setTreble(float newTreble) { *treble = newTreble; }
+float RMSouthOverdriveAudioProcessor::getTreble() const { return *treble; }
+void RMSouthOverdriveAudioProcessor::setTreble(float newTreble) { *treble = newTreble; }
 
 
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new RM5150HarmonicEnhancerAudioProcessor();
+    return new RMSouthOverdriveAudioProcessor();
 }

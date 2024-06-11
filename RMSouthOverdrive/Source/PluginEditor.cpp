@@ -1,7 +1,8 @@
 /*
   ==============================================================================
 
-    RM5150 GUI
+    PluginEditor.cpp
+    Author:  micheler1208
 
   ==============================================================================
 */
@@ -10,7 +11,7 @@
 #include "PluginEditor.h"
 
 // CONSTRUCTOR
-RM5150HarmonicEnhancerAudioProcessorEditor::RM5150HarmonicEnhancerAudioProcessorEditor (RM5150HarmonicEnhancerAudioProcessor& p)
+RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSouthOverdriveAudioProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor(p)
 {
     // Dimensioni iniziali dell'editor
@@ -65,7 +66,7 @@ RM5150HarmonicEnhancerAudioProcessorEditor::RM5150HarmonicEnhancerAudioProcessor
 
 
 // DESTRUCTOR
-RM5150HarmonicEnhancerAudioProcessorEditor::~RM5150HarmonicEnhancerAudioProcessorEditor()
+RMSouthOverdriveAudioProcessorEditor::~RMSouthOverdriveAudioProcessorEditor()
 {
     // Reset LookAndFeel to default
     driveSlider.setLookAndFeel(nullptr);
@@ -77,7 +78,7 @@ RM5150HarmonicEnhancerAudioProcessorEditor::~RM5150HarmonicEnhancerAudioProcesso
 
 
 // GUI - PAINT
-void RM5150HarmonicEnhancerAudioProcessorEditor::paint (juce::Graphics& g)
+void RMSouthOverdriveAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // Background
     backgroundImage = juce::ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
@@ -96,7 +97,7 @@ void RM5150HarmonicEnhancerAudioProcessorEditor::paint (juce::Graphics& g)
     titleFont.setHeight(48.0f);
     g.setFont(titleFont);
     g.setColour(juce::Colours::white);
-    g.drawFittedText("RM5150 Harmonic Enhancer", getLocalBounds().removeFromTop(70), juce::Justification::centred, 1);
+    g.drawFittedText("RM - SOUTH OVERDRIVE", getLocalBounds().removeFromTop(70), juce::Justification::centred, 1);
 
     // Set the font for the labels
     juce::Font customFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::HMRocking_ttf, BinaryData::HMRocking_ttfSize));
@@ -128,7 +129,7 @@ void RM5150HarmonicEnhancerAudioProcessorEditor::paint (juce::Graphics& g)
 
 
 // COMPONENTS - RESIZE
-void RM5150HarmonicEnhancerAudioProcessorEditor::resized()
+void RMSouthOverdriveAudioProcessorEditor::resized()
 {
     auto area = getLocalBounds().reduced(20); // Provide some margin
 
@@ -151,7 +152,7 @@ void RM5150HarmonicEnhancerAudioProcessorEditor::resized()
 
 
 // SLIDER CHANGE
-void RM5150HarmonicEnhancerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
+void RMSouthOverdriveAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
 {
     if (slider == &driveSlider)
     {

@@ -1,11 +1,20 @@
+/*
+  ==============================================================================
+
+    PluginProcessor.h
+    Author:  micheler1208
+
+  ==============================================================================
+*/
+
 #pragma once
 #include <JuceHeader.h>
 
-class RM5150HarmonicEnhancerAudioProcessor : public juce::AudioProcessor
+class RMSouthOverdriveAudioProcessor : public juce::AudioProcessor
 {
 public:
-    RM5150HarmonicEnhancerAudioProcessor();
-    ~RM5150HarmonicEnhancerAudioProcessor() override;
+    RMSouthOverdriveAudioProcessor();
+    ~RMSouthOverdriveAudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -76,5 +85,5 @@ private:
     std::atomic<float>* mid;
     std::atomic<float>* treble;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RM5150HarmonicEnhancerAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RMSouthOverdriveAudioProcessor)
 };

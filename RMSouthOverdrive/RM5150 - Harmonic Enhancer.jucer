@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="MKxq2m" name="RM5150 - Harmonic Enhancer" projectType="audioplug"
+<JUCERPROJECT id="MKxq2m" name="RM - South Overdrive" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
               jucerFormatVersion="1" headerPath="C:\D\MIKE-VST\WORKSPACE JUCE\JUCE\modules\asioCommon"
               pluginVST3Category="Distortion" pluginFormats="buildStandalone,buildVST3">
-  <MAINGROUP id="Sa3sy6" name="RM5150 - Harmonic Enhancer">
+  <MAINGROUP id="Sa3sy6" name="RM - South Overdrive">
     <GROUP id="{D5924D41-0551-8D30-2689-0DFBF5CC6BD6}" name="Source">
+      <GROUP id="{CD56AF44-4FE9-793C-2A71-2D5D9DBAC94C}" name="Data"/>
+      <GROUP id="{C2F3FA0E-C278-C34E-32F7-E77CCB0D8A33}" name="UI">
+        <FILE id="JjKOIF" name="CustomLookAndFeel.h" compile="0" resource="0"
+              file="Source/UI/CustomLookAndFeel.h"/>
+      </GROUP>
       <GROUP id="{757CEE76-EAD6-8A46-DBC0-0B04E88794E5}" name="font">
         <FILE id="iBkOAQ" name="HMRocking.ttf" compile="0" resource="1" file="Source/font/HMRocking.ttf"/>
       </GROUP>
       <GROUP id="{3EA3517F-A45D-8421-D7BD-289AE964E911}" name="img">
         <FILE id="nT6LZG" name="background.jpg" compile="0" resource="1" file="Source/img/background.jpg"/>
       </GROUP>
-      <FILE id="u4XfY3" name="CustomLookAndFeel.h" compile="0" resource="0"
-            file="Source/CustomLookAndFeel.h"/>
       <FILE id="oMp5oD" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="aYmzcf" name="PluginProcessor.h" compile="0" resource="0"
