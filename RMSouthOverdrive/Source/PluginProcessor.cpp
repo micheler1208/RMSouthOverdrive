@@ -14,21 +14,25 @@
 // Soft Clipping Function
 float RMSouthOverdriveAudioProcessor::softClipping(float x)
 {
-    return (3.0f / 2.0f) * x - (1.0f / 2.0f) * x * x * x;
+    const float a = 2.0f;
+    const float b = 1.0f;
+    return (a * x) / (1 + b * std::abs(x));
 }
 
 // Hard Clipping Function
 float RMSouthOverdriveAudioProcessor::hardClipping(float x)
 {
-    if (x > 1.0f) return 1.0f;
-    else if (x < -1.0f) return -1.0f;
+    const float positiveThreshold = 0.8f;
+    const float negativeThreshold = -0.8f;
+    if (x > positiveThreshold) return positiveThreshold;
+    else if (x < negativeThreshold) return negativeThreshold;
     else return x;
 }
 
 // Saturation Function
 float RMSouthOverdriveAudioProcessor::saturation(float x)
 {
-    return tanh(x);
+    return std::atan(x);
 }
 
 // Smoothing Filter
