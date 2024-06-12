@@ -64,10 +64,12 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     
     // Pulsante per caricare l'IR
     loadIRButton.setButtonText("Load IR");
-    loadIRButton.onClick = [this] { audioProcessor.loadImpulseResponse(); };
+    loadIRButton.onClick = [this] {
+        DBG("Load IR button clicked");
+        audioProcessor.loadImpulseResponse();
+    };
     addAndMakeVisible(&loadIRButton);
 }
-
 
 
 // DESTRUCTOR
@@ -149,7 +151,7 @@ void RMSouthOverdriveAudioProcessorEditor::resized()
     int startX = (area.getWidth() - totalWidth) / 2 + extraLeftMargin; // Calcola l'inizio dell'area degli slider per centrarli
     int startY = area.getHeight() - sliderHeight - labelHeight - 40; // Posiziona gli slider nella parte bassa dell'interfaccia
     
-    loadIRButton.setBounds(startX + 2 * (sliderWidth + spacing), startY + 80, sliderWidth, 30);
+    loadIRButton.setBounds(startX + 2 * (sliderWidth + spacing), startY + 100, sliderWidth, 30);
 
     driveSlider.setBounds(startX, startY, sliderWidth, sliderHeight);
     bassSlider.setBounds(startX + sliderWidth + spacing, startY, sliderWidth, sliderHeight);

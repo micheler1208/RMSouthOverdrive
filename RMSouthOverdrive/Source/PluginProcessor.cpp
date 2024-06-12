@@ -75,7 +75,7 @@ RMSouthOverdriveAudioProcessor::RMSouthOverdriveAudioProcessor()
                        .withInput("Input", juce::AudioChannelSet::mono(), true)
                        .withOutput("Output", juce::AudioChannelSet::stereo(), true))
 {
-    drive = new std::atomic<float>(1.0f);
+    drive = new std::atomic<float>(5.0f);
     outputVolume = new std::atomic<float>(0.7f);
     bass = new std::atomic<float>(0.0f);
     mid = new std::atomic<float>(0.0f);
@@ -178,8 +178,8 @@ void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int sample
     convolutionProcessor.prepare(spec);
 
     // Imposta i coefficienti del filtro
-    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 75.0f);
-    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 10000.0f);
+    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 100.0f);
+    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 11000.0f);
 
     updateFilterCoefficients();
 }
@@ -266,21 +266,30 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
     }
 }
 
+
 //LOAD IMPULSE RESPONSE
 void RMSouthOverdriveAudioProcessor::loadImpulseResponse()
 {
+    DBG("Opening File Chooser...");
     juce::FileChooser chooser("Select an Impulse Response File", {}, "*.wav");
-    chooser.launchAsync(juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles,
-        [this](const juce::FileChooser& fc)
+    if (chooser.browseForFileToOpen())
+    {
+        juce::File irFile = chooser.getResult();
+        DBG("File selected: " << irFile.getFullPathName());
+        if (irFile.existsAsFile())
         {
-            auto result = fc.getResult();
-            if (result.existsAsFile())
-            {
-                convolutionProcessor.loadImpulseResponse(result, juce::dsp::Convolution::Stereo::yes, juce::dsp::Convolution::Trim::yes, 0, juce::dsp::Convolution::Normalise::yes);
-            }
-        });
+            convolutionProcessor.loadImpulseResponse(irFile, juce::dsp::Convolution::Stereo::yes, juce::dsp::Convolution::Trim::yes, 0, juce::dsp::Convolution::Normalise::yes);
+            DBG("Impulse response loaded.");
+        }
+    }
+    else
+    {
+        DBG("No file selected.");
+    }
 }
 
+
+//UPDATE FILTERS EQ
 void RMSouthOverdriveAudioProcessor::updateFilterCoefficients()
 {
     auto sampleRate = getSampleRate();
