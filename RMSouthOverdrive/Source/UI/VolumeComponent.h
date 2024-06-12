@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FilterComponent.h
+    VolumeComponent.h
     Author:  micheler1208
 
   ==============================================================================
@@ -10,36 +10,32 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "CustomLookAndFeelViolet.h"
+#include "CustomLookAndFeelDriveVolume.h"
 #include "CustomSlider.h"
 
 //==============================================================================
 /*
 */
-class FilterComponent  : public juce::Component
+class VolumeComponent  : public juce::Component
 {
 public:
-    FilterComponent(juce::AudioProcessorValueTreeState& apvts);
-    ~FilterComponent() override;
+    VolumeComponent(juce::AudioProcessorValueTreeState& apvts);
+    ~VolumeComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
 
-    // SLIDERS CUSTOM STYLE
-    CustomLookAndFeelViolet customLookAndFeelViolet;
-
-    // CUTOFF
-    CustomSlider cutoffSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment;
+    // CUSTOM LOOK AND FEEL
+    CustomLookAndFeelDriveVolume customLookAndFeelDriveVolume;
     
     // VOLUME
     CustomSlider volumeSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volumeAttachment;
 
     // LABELS
-    juce::Label cutoffLabel, volumeLabel;
+    juce::Label volumeLabel;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VolumeComponent)
 };

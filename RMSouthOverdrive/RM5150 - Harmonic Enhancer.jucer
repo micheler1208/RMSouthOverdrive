@@ -7,16 +7,35 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="Sa3sy6" name="RM - South Overdrive">
     <GROUP id="{D5924D41-0551-8D30-2689-0DFBF5CC6BD6}" name="Source">
-      <GROUP id="{CD56AF44-4FE9-793C-2A71-2D5D9DBAC94C}" name="Data"/>
+      <GROUP id="{CD56AF44-4FE9-793C-2A71-2D5D9DBAC94C}" name="Data">
+        <FILE id="Me1Pvp" name="DriveData.cpp" compile="1" resource="0" file="Source/Data/DriveData.cpp"/>
+        <FILE id="rwUvZh" name="DriveData.h" compile="0" resource="0" file="Source/Data/DriveData.h"/>
+        <FILE id="gc9XNQ" name="EQData.cpp" compile="1" resource="0" file="Source/Data/EQData.cpp"/>
+        <FILE id="MFgvMH" name="EQData.h" compile="0" resource="0" file="Source/Data/EQData.h"/>
+        <FILE id="NYQUIZ" name="VolumeData.cpp" compile="1" resource="0" file="Source/Data/VolumeData.cpp"/>
+        <FILE id="uhQoww" name="VolumeData.h" compile="0" resource="0" file="Source/Data/VolumeData.h"/>
+      </GROUP>
       <GROUP id="{C2F3FA0E-C278-C34E-32F7-E77CCB0D8A33}" name="UI">
         <FILE id="dhhVDL" name="CustomLookAndFeelDriveVolume.h" compile="0"
               resource="0" file="Source/UI/CustomLookAndFeelDriveVolume.h"/>
         <FILE id="ZiOTGe" name="CustomLookAndFeelEQ.h" compile="0" resource="0"
               file="Source/UI/CustomLookAndFeelEQ.h"/>
+        <FILE id="ZS5rog" name="CustomSlider.h" compile="0" resource="0" file="Source/UI/CustomSlider.h"/>
+        <FILE id="uiOv3L" name="DriveComponent.cpp" compile="1" resource="0"
+              file="Source/UI/DriveComponent.cpp"/>
+        <FILE id="M4GE4S" name="DriveComponent.h" compile="0" resource="0"
+              file="Source/UI/DriveComponent.h"/>
+        <FILE id="nPu5Zz" name="EQComponent.cpp" compile="1" resource="0" file="Source/UI/EQComponent.cpp"/>
+        <FILE id="LhYP5l" name="EQComponent.h" compile="0" resource="0" file="Source/UI/EQComponent.h"/>
+        <FILE id="OjLew6" name="VolumeComponent.cpp" compile="1" resource="0"
+              file="Source/UI/VolumeComponent.cpp"/>
+        <FILE id="QULEgg" name="VolumeComponent.h" compile="0" resource="0"
+              file="Source/UI/VolumeComponent.h"/>
       </GROUP>
       <GROUP id="{757CEE76-EAD6-8A46-DBC0-0B04E88794E5}" name="font">
         <FILE id="YE5zRP" name="caviar.ttf" compile="0" resource="1" file="Source/font/caviar.ttf"/>
         <FILE id="iBkOAQ" name="HMRocking.ttf" compile="0" resource="1" file="Source/font/HMRocking.ttf"/>
+        <FILE id="IZ6TAh" name="timegoing.ttf" compile="0" resource="1" file="Source/font/timegoing.ttf"/>
       </GROUP>
       <GROUP id="{3EA3517F-A45D-8421-D7BD-289AE964E911}" name="img">
         <FILE id="nT6LZG" name="background.jpg" compile="0" resource="1" file="Source/img/background.jpg"/>

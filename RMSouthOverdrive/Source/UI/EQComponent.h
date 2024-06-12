@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    AdsrComponent.h
+    EQComponent.h
     Author:  micheler1208
 
   ==============================================================================
@@ -10,37 +10,38 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "CustomLookAndFeelYellow.h"
+#include "CustomLookAndFeelEQ.h"
 #include "CustomSlider.h"
 
 //==============================================================================
 /*
 */
-class AdsrComponent  : public juce::Component
+class EQComponent  : public juce::Component
 {
 public:
-    AdsrComponent(juce::AudioProcessorValueTreeState& apvts);
-    ~AdsrComponent() override;
+    EQComponent(juce::AudioProcessorValueTreeState& apvts);
+    ~EQComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
 
-    // ADSR
-    CustomSlider attackSlider, decaySlider, sustainSlider, releaseSlider;
+
+    // CUSTOM LOOK AND FEEL
+    CustomLookAndFeelEQ customLookAndFeelEQ;
+
+    // SLIDERS
+    CustomSlider bassSlider, midSlider, trebleSlider;
 
     // LABELS
-    juce::Label attackLabel, decayLabel, sustainLabel, releaseLabel;
+    juce::Label bassLabel, midLabel, trebleLabel;
 
-    // ADSR ATTACHMENTS
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attackAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> decayAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> sustainAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> releaseAttachment;
+    // EQ ATTACHMENTS
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> bassAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> midAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> trebleAttachment;
 
-    // SLIDERS CUSTOM STYLE
-    CustomLookAndFeelYellow customLookAndFeelYellow;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdsrComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EQComponent)
 };

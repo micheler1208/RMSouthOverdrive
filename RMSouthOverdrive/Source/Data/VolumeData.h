@@ -5,7 +5,7 @@
     Author:  micheler1208
 
   ==============================================================================
-*/
+
 
 #pragma once
 #include <JuceHeader.h>
@@ -21,4 +21,4 @@ public:
 private:
     juce::dsp::StateVariableTPTFilter<float> filter;
     bool isPrepared { false };
-};
+};*/

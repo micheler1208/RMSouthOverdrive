@@ -5,7 +5,7 @@
     Author:  micheler1208
 
   ==============================================================================
-*/
+
 
 #include "FilterData.h"
 
@@ -59,4 +59,4 @@ void FilterData::updateParameters (const int filterType, const float frequency, 
 void FilterData::reset()
 {
     filter.reset();
-}
+}*/

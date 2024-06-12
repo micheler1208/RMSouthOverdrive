@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FilterComponent.h
+    DriveComponent.h
     Author:  micheler1208
 
   ==============================================================================
@@ -10,36 +10,32 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "CustomLookAndFeelViolet.h"
+#include "CustomLookAndFeelDriveVolume.h"
 #include "CustomSlider.h"
 
 //==============================================================================
 /*
 */
-class FilterComponent  : public juce::Component
+class DriveComponent  : public juce::Component
 {
 public:
-    FilterComponent(juce::AudioProcessorValueTreeState& apvts);
-    ~FilterComponent() override;
+    DriveComponent(juce::AudioProcessorValueTreeState& apvts);
+    ~DriveComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
 
-    // SLIDERS CUSTOM STYLE
-    CustomLookAndFeelViolet customLookAndFeelViolet;
-
-    // CUTOFF
-    CustomSlider cutoffSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment;
+    // CUSTOM LOOK AND FEEL
+    CustomLookAndFeelDriveVolume customLookAndFeelDriveVolume;
     
-    // VOLUME
-    CustomSlider volumeSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volumeAttachment;
+    // DRIVE
+    CustomSlider driveSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
 
     // LABELS
-    juce::Label cutoffLabel, volumeLabel;
+    juce::Label driveLabel;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DriveComponent)
 };

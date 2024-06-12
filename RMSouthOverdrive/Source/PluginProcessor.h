@@ -61,9 +61,15 @@ public:
     
     //Load Impulse Response
     void loadImpulseResponse();
+    
+    
+    juce::AudioProcessorValueTreeState apvts;
 
     
 private:
+    //Create Params
+    juce::AudioProcessorValueTreeState::ParameterLayout createParams(); 
+
     // Functions and Filters
     float softClipping(float x);
     float hardClipping(float x);

@@ -5,7 +5,7 @@
     Author:  micheler1208
 
   ==============================================================================
-*/
+
 
 #include "AdsrData.h"
 
@@ -19,3 +19,4 @@ void AdsrData::updateADSR(const float attack, const float decay, const float sus
 
     setParameters(adsrParams);
 }
+*/

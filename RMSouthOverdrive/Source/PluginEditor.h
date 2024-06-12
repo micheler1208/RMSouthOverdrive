@@ -9,8 +9,9 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "UI/CustomLookAndFeelDriveVolume.h"
-#include "UI/CustomLookAndFeelEQ.h"
+#include "UI/EQComponent.h"
+#include "UI/VolumeComponent.h"
+#include "UI/DriveComponent.h"
 #include "PluginProcessor.h"
 
 class RMSouthOverdriveAudioProcessorEditor  : public juce::AudioProcessorEditor,
@@ -32,18 +33,18 @@ private:
     // PROCESSOR
     RMSouthOverdriveAudioProcessor& audioProcessor;
     
+
+    //DRIVE
+    DriveComponent drive;
+    
+    //EQ
+    EQComponent EQ;
+    
+    //VOLUME
+    VolumeComponent volume;
+    
     // IMAGES
     juce::Image backgroundImage;
-    
-    // SLIDERS
-    CustomLookAndFeelDriveVolume customLookAndFeelDriveVolume;
-    CustomLookAndFeelEQ customLookAndFeelEQ;
-    
-    juce::Slider driveSlider;
-    juce::Slider bassSlider;
-    juce::Slider midSlider;
-    juce::Slider trebleSlider;
-    juce::Slider outputVolumeSlider;
     
     //LOAD IR BUTTON
     juce::TextButton loadIRButton;
