@@ -54,6 +54,6 @@ void DriveComponent::paint (juce::Graphics& g)
 // RESIZED
 void DriveComponent::resized()
 {
-    driveSlider.setBounds(0, 0, 75, 75);
-    driveLabel.setBounds(0, -75, 75, 40);
+    driveLabel.setBounds(0, 0, 75, 40);
+    driveSlider.setBounds(0, 40, 75, 75);
 }

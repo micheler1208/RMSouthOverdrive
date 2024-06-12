@@ -80,13 +80,13 @@ void RMSouthOverdriveAudioProcessorEditor::resized()
     int startY = area.getHeight() - sliderHeight - labelHeight - 40;
     
     
-    drive.setBounds(0, 0, getWidth() / 2, 150);
+    drive.setBounds(53, 50, getWidth() / 2, 150);
 
-    EQ.setBounds(0, getHeight() -150, getWidth() , 150);
+    EQ.setBounds(53, getHeight() -120, getWidth() , 150);
 
-    volume.setBounds(getWidth()/2, 0, getWidth() / 2, 150);
+    volume.setBounds(getWidth()/2 + 53, 50, getWidth() / 2, 150);
     
-    loadIRButton.setBounds(startX + 2 * (sliderWidth + spacing), startY + 100, sliderWidth, 30);
+    loadIRButton.setBounds(getWidth()/2-40, 380, 80, 30);
 
 }
 

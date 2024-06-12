@@ -91,7 +91,7 @@ void EQComponent::paint (juce::Graphics& g)
 // RESIZED
 void EQComponent::resized()
 {
-    const int margin = 25;
+    const int margin = 13;
     const int sliderWidth = 75;
     const int sliderHeight = 75;
     const int initialX = 0;

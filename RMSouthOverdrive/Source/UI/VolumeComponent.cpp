@@ -54,6 +54,6 @@ void VolumeComponent::paint (juce::Graphics& g)
 // RESIZED
 void VolumeComponent::resized()
 {
-    volumeSlider.setBounds(0, 0, 75, 75);
-    volumeLabel.setBounds(0, -75, 75, 40);
+    volumeLabel.setBounds(0, 0, 75, 40);
+    volumeSlider.setBounds(0, 40, 75, 75);
 }
