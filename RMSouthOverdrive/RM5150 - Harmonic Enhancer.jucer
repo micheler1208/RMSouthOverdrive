@@ -9,10 +9,13 @@
     <GROUP id="{D5924D41-0551-8D30-2689-0DFBF5CC6BD6}" name="Source">
       <GROUP id="{CD56AF44-4FE9-793C-2A71-2D5D9DBAC94C}" name="Data"/>
       <GROUP id="{C2F3FA0E-C278-C34E-32F7-E77CCB0D8A33}" name="UI">
-        <FILE id="JjKOIF" name="CustomLookAndFeel.h" compile="0" resource="0"
-              file="Source/UI/CustomLookAndFeel.h"/>
+        <FILE id="dhhVDL" name="CustomLookAndFeelDriveVolume.h" compile="0"
+              resource="0" file="Source/UI/CustomLookAndFeelDriveVolume.h"/>
+        <FILE id="ZiOTGe" name="CustomLookAndFeelEQ.h" compile="0" resource="0"
+              file="Source/UI/CustomLookAndFeelEQ.h"/>
       </GROUP>
       <GROUP id="{757CEE76-EAD6-8A46-DBC0-0B04E88794E5}" name="font">
+        <FILE id="YE5zRP" name="caviar.ttf" compile="0" resource="1" file="Source/font/caviar.ttf"/>
         <FILE id="iBkOAQ" name="HMRocking.ttf" compile="0" resource="1" file="Source/font/HMRocking.ttf"/>
       </GROUP>
       <GROUP id="{3EA3517F-A45D-8421-D7BD-289AE964E911}" name="img">

@@ -15,10 +15,10 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     : AudioProcessorEditor(&p), audioProcessor(p)
 {
     // Dimensioni iniziali dell'editor
-    setSize(600, 400);
+    setSize(359, 650);
 
     // Slider per il Drive
-    driveSlider.setLookAndFeel(&customLookAndFeel);
+    driveSlider.setLookAndFeel(&customLookAndFeelDriveVolume);
     driveSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     driveSlider.setRange(0.0, 10.0, 0.1);
     driveSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
@@ -27,7 +27,7 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     driveSlider.addListener(this);
 
     // Slider per il Bass
-    bassSlider.setLookAndFeel(&customLookAndFeel);
+    bassSlider.setLookAndFeel(&customLookAndFeelEQ);
     bassSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     bassSlider.setRange(-5.0, 5.0, 0.1); // Range modificato
     bassSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
@@ -36,7 +36,7 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     bassSlider.addListener(this);
 
     // Slider per il Mid
-    midSlider.setLookAndFeel(&customLookAndFeel);
+    midSlider.setLookAndFeel(&customLookAndFeelEQ);
     midSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     midSlider.setRange(-5.0, 5.0, 0.1); // Range modificato
     midSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
@@ -45,7 +45,7 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     midSlider.addListener(this);
 
     // Slider per il Treble
-    trebleSlider.setLookAndFeel(&customLookAndFeel);
+    trebleSlider.setLookAndFeel(&customLookAndFeelEQ);
     trebleSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     trebleSlider.setRange(-5.0, 5.0, 0.1); // Range modificato
     trebleSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
@@ -54,7 +54,7 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     trebleSlider.addListener(this);
 
     // Slider per il Volume di Uscita
-    outputVolumeSlider.setLookAndFeel(&customLookAndFeel);
+    outputVolumeSlider.setLookAndFeel(&customLookAndFeelDriveVolume);
     outputVolumeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     outputVolumeSlider.setRange(0.0, 1.0, 0.01);
     outputVolumeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
@@ -101,11 +101,11 @@ void RMSouthOverdriveAudioProcessorEditor::paint (juce::Graphics& g)
     }
 
     // Set the font for the title text
-    juce::Font titleFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::HMRocking_ttf, BinaryData::HMRocking_ttfSize));
+    /*juce::Font titleFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::HMRocking_ttf, BinaryData::HMRocking_ttfSize));
     titleFont.setHeight(48.0f);
     g.setFont(titleFont);
     g.setColour(juce::Colours::white);
-    g.drawFittedText("RM - SOUTH OVERDRIVE", getLocalBounds().removeFromTop(70), juce::Justification::centred, 1);
+    g.drawFittedText("RM - SOUTH OVERDRIVE", getLocalBounds().removeFromTop(70), juce::Justification::centred, 1);*/
 
     // Set the font for the labels
     juce::Font customFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::HMRocking_ttf, BinaryData::HMRocking_ttfSize));
