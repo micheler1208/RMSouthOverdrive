@@ -38,8 +38,9 @@ void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int sample
     drive.prepareToPlay();
     volume.prepareToPlay();
     filters.prepareToPlay(spec);
-    IR.prepareToPlay();
+    IR.prepareToPlay(spec);
     EQ.prepareToPlay(spec);
+
 }
 
 
@@ -50,50 +51,42 @@ void RMSouthOverdriveAudioProcessor::releaseResources()
 
 
 // NEW PROCESS BLOCK
-void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) {
-    
-    //INIZIALIZE CHANNELS AND SAMPLEz
+void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+{
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
-    auto numSamples = buffer.getNumSamples();
 
-    //CLEAR BUFFER
-    for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
-        buffer.clear(i, 0, numSamples);
+    // Clear any output channels that don't have input data
+    for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    {
+        buffer.clear(i, 0, buffer.getNumSamples());
     }
 
-    //GAIN STAGES
-    if (totalNumInputChannels > 0 && totalNumOutputChannels > 1) {
-        
-        auto* leftOutputChannelData = buffer.getWritePointer(0);
-        auto* rightOutputChannelData = buffer.getWritePointer(1);
+    // GAIN STAGES
+    if (totalNumInputChannels > 0 && totalNumOutputChannels > 0)
+    {
+        // Update parameters
+        float driveValue = apvts.getRawParameterValue("DRIVE")->load();
+        drive.updateValue(driveValue);
 
-        for (int sample = 0; sample < numSamples; ++sample) {
-            
-            float driveValue = apvts.getRawParameterValue("DRIVE")->load();
-            drive.updateValue(driveValue);
-            drive.process(buffer, sample);
-                       
-            float volumeValue = apvts.getRawParameterValue("VOLUME")->load();
-            volume.updateValue(volumeValue);
-            volume.process(buffer, sample);
-            
-            auto* processedData = buffer.getReadPointer(0);
+        float volumeValue = apvts.getRawParameterValue("VOLUME")->load();
+        volume.updateValue(volumeValue);
 
-            leftOutputChannelData[sample] = processedData[sample];
-            rightOutputChannelData[sample] = processedData[sample];
-        }
-
-        filters.process(buffer);
-        
-        IR.process(buffer);
-        
         float bassValue = apvts.getRawParameterValue("BASS")->load();
         float midValue = apvts.getRawParameterValue("MID")->load();
         float trebleValue = apvts.getRawParameterValue("TREBLE")->load();
         EQ.updateValues(bassValue, midValue, trebleValue);
-        EQ.process(buffer);
+
+        // Process the signal chain
+        juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::ProcessContextReplacing<float> context(block);
+
+        drive.process(buffer); // Process drive effect
+        filters.process(buffer); // Process filters
+        IR.process(buffer); // Process IR
+        EQ.process(buffer); // Process EQ
+        volume.process(buffer); // Process volume adjustment
     }
 }
 

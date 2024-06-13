@@ -16,7 +16,7 @@ public:
     void prepareToPlay();
     void updateValue(const float driveValue);
     void reset();
-    void process(juce::AudioBuffer<float>& buffer, int sample);
+    void process(juce::AudioBuffer<float>& buffer);
     
 private:
     float drive;

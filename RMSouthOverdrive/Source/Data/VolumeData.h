@@ -14,7 +14,7 @@ class VolumeData
 {
 public:
     void prepareToPlay ();
-    void process (juce::AudioBuffer<float>& buffer, int sample);
+    void process (juce::AudioBuffer<float>& buffer);
     void updateValue (const float volumeValue);
     void reset();
     

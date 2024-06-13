@@ -10,9 +10,10 @@
 #include "IRData.h"
 
 // PREPARE TO PLAY
-void IRData::prepareToPlay ()
+void IRData::prepareToPlay (juce::dsp::ProcessSpec spec)
 {
-    reset();   
+    reset(); 
+    convolutionProcessor.prepare(spec);
     isPrepared = true;
 }
 

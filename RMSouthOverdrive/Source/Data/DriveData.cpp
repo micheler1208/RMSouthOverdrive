@@ -18,30 +18,46 @@ void DriveData::prepareToPlay()
 }
 
 // PROCESS FILTER
-void DriveData::process (juce::AudioBuffer<float>& buffer, int sample)
+void DriveData::process(juce::AudioBuffer<float>& buffer)
 {
     jassert(isPrepared);
-    
-    auto* inputChannelData = buffer.getReadPointer(0);
-    float cleanSignal = inputChannelData[sample];
 
-    // First stage of distortion
-    float gainStage1 = cleanSignal * drive;
-    float clippedSignal1 = combinedClipping(gainStage1);
+    auto totalNumInputChannels = buffer.getNumChannels();
+    auto numSamples = buffer.getNumSamples();
 
-    // Smoothing between stages
-    float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSample, 0.1f);
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
+        auto* channelData = buffer.getWritePointer(channel);
 
-    // Second stage of distortion
-    float gainStage2 = smoothedSignal1 * drive;
-    float clippedSignal2 = diodeClipping(gainStage2);
+        for (int sample = 0; sample < numSamples; ++sample)
+        {
+            float cleanSignal = channelData[sample];
 
-    // Smoothing between stages
-    float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSample, 0.1f);
+            // First stage of distortion
+            float gainStage1 = cleanSignal * drive;
+            float clippedSignal1 = combinedClipping(gainStage1);
 
-    // Third stage of distortion
-    float gainStage3 = smoothedSignal2 * drive;
-    float clippedSignal3 = hardClipping(gainStage3);
+            // Smoothing between stages
+            float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSample, 0.1f);
+
+            // Second stage of distortion
+            float gainStage2 = smoothedSignal1 * drive;
+            float clippedSignal2 = diodeClipping(gainStage2);
+
+            // Smoothing between stages
+            float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSample, 0.1f);
+
+            // Third stage of distortion
+            float gainStage3 = smoothedSignal2 * drive;
+            float clippedSignal3 = hardClipping(gainStage3);
+
+            // Store the processed sample back into the buffer
+            channelData[sample] = clippedSignal3;
+
+            // Update prevSample for the next iteration
+            prevSample = smoothedSignal2;
+        }
+    }
 }
 
 // UPDATE PARAMETERS

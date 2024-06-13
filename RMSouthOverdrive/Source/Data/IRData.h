@@ -14,7 +14,7 @@
 class IRData
 {
 public:
-    void prepareToPlay ();
+    void prepareToPlay (juce::dsp::ProcessSpec spec);
     void process (juce::AudioBuffer<float>& buffer);
     void updateParameters ();
     void reset();
