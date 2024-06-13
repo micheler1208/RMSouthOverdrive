@@ -1,24 +1,26 @@
 /*
 ==============================================================================
 
-    VolumeData.h
+    IR.h
     Author:  micheler1208
 
 ==============================================================================
 */
 
 #pragma once
-#include <JuceHeader.h>
 
-class VolumeData
+
+class IR
 {
 public:
     void prepareToPlay ();
-    void process (const float distorteSignal);
-    void updateValue (const float volumeValue);
+    void process (juce::AudioBuffer<float>& buffer);
+    void updateParameters ();
     void reset();
+    void loadImpulseResponse();
     
-private:
-    float volume;
+private:    
+    juce::dsp::Convolution convolutionProcessor;
+    
     bool isPrepared { false };
 };

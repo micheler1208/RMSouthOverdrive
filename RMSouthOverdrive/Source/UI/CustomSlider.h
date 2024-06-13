@@ -30,7 +30,7 @@ protected:
         juce::String suffix;
         juce::String textValue;
 
-        if (getName() == "Drive" || getName() == "Bass" || getName() == "Mid" || getName() == "Trble")
+        if (getName() == "Drive" || getName() == "Bass" || getName() == "Mid" || getName() == "Treble")
         {
             suffix = " ";
             textValue = juce::String(value, numDecimalPlaces);

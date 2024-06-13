@@ -1,62 +1,43 @@
 /*
-  ==============================================================================
+==============================================================================
 
-    FilterData.cpp
+    VolumeData.cpp
     Author:  micheler1208
 
-  ==============================================================================
+==============================================================================
+*/
 
-
-#include "FilterData.h"
+#include "VolumeData.h"
 
 // PREPARE TO PLAY
-void FilterData::prepareToPlay (double sampleRate, int samplesPerBlock, int numChannels)
+void VolumeData::prepareToPlay()
 {
-    filter.reset();
-    
-    juce::dsp::ProcessSpec spec;
-    spec.maximumBlockSize = samplesPerBlock;
-    spec.sampleRate = sampleRate;
-    spec.numChannels = numChannels;
-    
-    filter.prepare (spec);
+    volume.reset();
+    volume = 0.75f;
     
     isPrepared = true;
 }
 
 // PROCESS FILTER
-void FilterData::process (juce::AudioBuffer<float>& buffer)
+void VolumeData::process (juce::AudioBuffer<float>& buffer)
 {
     jassert (isPrepared);
     
-    juce::dsp::AudioBlock<float> block { buffer };
-    filter.process (juce::dsp::ProcessContextReplacing<float> { block });
+    auto* inputChannelData = buffer.getReadPointer(0);
+    float distortedSignal = inputChannelData[sample];
+    
+    float adjustedOutputVolume = std::pow(*volume, 5.0f);
+    float processedSignal = distortedSignal * adjustedOutputVolume;
 }
 
 // UPDATE PARAMETERS
-void FilterData::updateParameters (const int filterType, const float frequency, const float resonance)
+void VolumeData::updateValue (const float volumeValue)
 {
-    switch (filterType)
-    {
-        case 0:
-            filter.setType (juce::dsp::StateVariableTPTFilterType::lowpass);
-            break;
-            
-        case 1:
-            filter.setType (juce::dsp::StateVariableTPTFilterType::bandpass);
-            break;
-            
-        case 2:
-            filter.setType (juce::dsp::StateVariableTPTFilterType::highpass);
-            break;
-    }
-    
-    filter.setCutoffFrequency (frequency);
-    filter.setResonance (resonance);
+    volume = volumeValue;
 }
 
 // RESET
-void FilterData::reset()
+void VolumeData::reset()
 {
-    filter.reset();
-}*/
+    volume.reset();
+}

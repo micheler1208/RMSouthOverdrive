@@ -1,7 +1,7 @@
 /*
 ==============================================================================
 
-    EQData.h
+    FilterData.h
     Author:  micheler1208
 
 ==============================================================================
@@ -10,16 +10,21 @@
 #pragma once
 
 
-class EQData
+class FilterData
 {
 public:
     void prepareToPlay (juce::dsp::ProcessSpec spec);
     void process (juce::AudioBuffer<float>& buffer);
-    void updateValues(float bassValue, float midValue, float trebleValue);
+    void updateParameters ();
     void reset();
     
 private:    
-    float bass, mid, treble;
-    juce::dsp::ProcessorChain<FilterDuplicator, FilterDuplicator, FilterDuplicator> EQ;
+    // DSP filters
+    using Filter = juce::dsp::IIR::Filter<float>;
+    using Coefficients = juce::dsp::IIR::Coefficients<float>;
+    using FilterDuplicator = juce::dsp::ProcessorDuplicator<Filter, Coefficients>;
+    FilterDuplicator highPassFilter;
+    FilterDuplicator lowPassFilter;
+    
     bool isPrepared { false };
 };

@@ -9,6 +9,12 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "Data/DriveData.h"
+#include "Data/EQData.h"
+#include "Data/VolumeData.h"
+#include "Data/FilterData.h"
+#include "Data/IR.h"
+#include "Data/EQ.h"
 
 class RMSouthOverdriveAudioProcessor : public juce::AudioProcessor
 {
@@ -37,6 +43,8 @@ public:
 
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
+    
+    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 
     // Parameter getters and setters
     float getDrive() const;
@@ -53,15 +61,8 @@ public:
     // Update filter coefficients method (new)
     void updateFilterCoefficients();
     
-    // Custom method to check if the bus layout is supported
-    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
-    
-    // Sample for Smoothing Filter
-    float prevSample;  // Variabile membro per il filtro di smoothing    
-    
     //Load Impulse Response
     void loadImpulseResponse();
-    
     
     juce::AudioProcessorValueTreeState apvts;
 
@@ -69,34 +70,24 @@ public:
 private:
     //Create Params
     juce::AudioProcessorValueTreeState::ParameterLayout createParams(); 
-
-    // Functions and Filters
-    float softClipping(float x);
-    float hardClipping(float x);
-    float combinedClipping(float x);
-    float diodeClipping(float x);
-    float saturation(float x);
-    float smoothingFilter(float currentSample, float& prevSample, float smoothingFactor);
-    void applyFilter(juce::AudioBuffer<float>& buffer);
-
-    // DSP filters
-    using Filter = juce::dsp::IIR::Filter<float>;
-    using Coefficients = juce::dsp::IIR::Coefficients<float>;
-    using FilterDuplicator = juce::dsp::ProcessorDuplicator<Filter, Coefficients>;
     
-    juce::dsp::Convolution convolutionProcessor;
+    //Drive
+    DriveData drive;
+    
+    //EQ
+    EQData EQ;
+    
+    //Volume
+    VolumeData volume;
 
-    FilterDuplicator highPassFilter;
-    FilterDuplicator lowPassFilter;
-
-    juce::dsp::ProcessorChain<FilterDuplicator, FilterDuplicator, FilterDuplicator> eqChain;
-
-    // Audio parameters
-    std::atomic<float>* drive;
-    std::atomic<float>* outputVolume;
-    std::atomic<float>* bass;
-    std::atomic<float>* mid;
-    std::atomic<float>* treble;
+    //Filters LP,HP
+    FilterData filters;
+    
+    //IR
+    IRData IR;
+    
+    //EQ
+    EQData EQ;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RMSouthOverdriveAudioProcessor)
 };

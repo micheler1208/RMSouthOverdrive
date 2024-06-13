@@ -1,24 +1,37 @@
 /*
   ==============================================================================
 
-    FilterData.h
+    DriveData.h
     Author:  micheler1208
 
   ==============================================================================
-
+*/
 
 #pragma once
 #include <JuceHeader.h>
 
-class FilterData
+class DriveData
 {
 public:
-    void prepareToPlay (double sampleRate, int samplesPerBlock, int numChannels);
-    void process (juce::AudioBuffer<float>& buffer);
-    void updateParameters (const int filterType, const float frequency, const float resonance);
+    void prepareToPlay();
+    void updateValue(const float driveValue);
     void reset();
+    void process(juce::AudioBuffer<float>& buffer, int sample);
     
 private:
-    juce::dsp::StateVariableTPTFilter<float> filter;
+    float drive;
+    float prevSample;
     bool isPrepared { false };
-};*/
+    
+    //Clipping functions
+    float softClipping(float x);
+    float hardClipping(float x);
+    float combinedClipping(float x);
+    float diodeClipping(float x);
+    
+    //Saturation
+    float saturation(float x);
+    
+    //Smoothing Filter
+    float smoothingFilter(float currentSample, float& prevSample, float smoothingFactor);
+};
