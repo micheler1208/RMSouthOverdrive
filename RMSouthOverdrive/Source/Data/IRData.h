@@ -1,16 +1,17 @@
 /*
 ==============================================================================
 
-    IR.h
+    IRData.h
     Author:  micheler1208
 
 ==============================================================================
 */
 
 #pragma once
+#include <JuceHeader.h>
 
 
-class IR
+class IRData
 {
 public:
     void prepareToPlay ();

@@ -38,7 +38,7 @@ void RMSouthOverdriveAudioProcessor::prepareToPlay(double sampleRate, int sample
     drive.prepareToPlay();
     volume.prepareToPlay();
     filters.prepareToPlay(spec);
-    IR.prepareToPlay(spec);
+    IR.prepareToPlay();
     EQ.prepareToPlay(spec);
 }
 
@@ -69,8 +69,6 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
         auto* leftOutputChannelData = buffer.getWritePointer(0);
         auto* rightOutputChannelData = buffer.getWritePointer(1);
 
-        float adjustedOutputVolume = std::pow(*volume, 5.0f);
-
         for (int sample = 0; sample < numSamples; ++sample) {
             
             float driveValue = apvts.getRawParameterValue("DRIVE")->load();
@@ -83,7 +81,6 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
             
             auto* processedData = buffer.getReadPointer(0);
 
-            // Duplicate processed signal to both output channels
             leftOutputChannelData[sample] = processedData[sample];
             rightOutputChannelData[sample] = processedData[sample];
         }
@@ -95,7 +92,7 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
         float bassValue = apvts.getRawParameterValue("BASS")->load();
         float midValue = apvts.getRawParameterValue("MID")->load();
         float trebleValue = apvts.getRawParameterValue("TREBLE")->load();
-        EQ.updateValues(bassValue,midValue,trebleValue)
+        EQ.updateValues(bassValue, midValue, trebleValue);
         EQ.process(buffer);
     }
 }

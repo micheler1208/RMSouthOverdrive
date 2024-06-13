@@ -12,7 +12,7 @@
 // PREPARE TO PLAY
 void DriveData::prepareToPlay()
 {
-    drive.reset();
+    reset();
     drive = 5.0f;
     isPrepared = true;
 }
@@ -26,21 +26,21 @@ void DriveData::process (juce::AudioBuffer<float>& buffer, int sample)
     float cleanSignal = inputChannelData[sample];
 
     // First stage of distortion
-    float gainStage1 = cleanSignal * *drive;
+    float gainStage1 = cleanSignal * drive;
     float clippedSignal1 = combinedClipping(gainStage1);
 
     // Smoothing between stages
     float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSample, 0.1f);
 
     // Second stage of distortion
-    float gainStage2 = smoothedSignal1 * *drive;
+    float gainStage2 = smoothedSignal1 * drive;
     float clippedSignal2 = diodeClipping(gainStage2);
 
     // Smoothing between stages
     float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSample, 0.1f);
 
     // Third stage of distortion
-    float gainStage3 = smoothedSignal2 * *drive;
+    float gainStage3 = smoothedSignal2 * drive;
     float clippedSignal3 = hardClipping(gainStage3);
 }
 
@@ -53,7 +53,7 @@ void DriveData:: updateValue (const float driveValue)
 // RESET
 void DriveData::reset()
 {
-    drive.reset();
+    drive = 5.0f;
 }
 
 // Soft Clipping Function

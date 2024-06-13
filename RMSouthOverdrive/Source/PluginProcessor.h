@@ -13,8 +13,8 @@
 #include "Data/EQData.h"
 #include "Data/VolumeData.h"
 #include "Data/FilterData.h"
-#include "Data/IR.h"
-#include "Data/EQ.h"
+#include "Data/IRData.h"
+#include "Data/EQData.h"
 
 class RMSouthOverdriveAudioProcessor : public juce::AudioProcessor
 {
@@ -46,23 +46,8 @@ public:
     
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 
-    // Parameter getters and setters
-    float getDrive() const;
-    void setDrive(float newDrive);
-    float getOutputVolume() const;
-    void setOutputVolume(float newVolume);
-    float getBass() const;
-    void setBass(float newBass);
-    float getMid() const;
-    void setMid(float newMid);
-    float getTreble() const;
-    void setTreble(float newTreble);
 
-    // Update filter coefficients method (new)
-    void updateFilterCoefficients();
-    
-    //Load Impulse Response
-    void loadImpulseResponse();
+    IRData& getIR() { return IR; };
     
     juce::AudioProcessorValueTreeState apvts;
 
@@ -74,18 +59,14 @@ private:
     //Drive
     DriveData drive;
     
-    //EQ
-    EQData EQ;
-    
     //Volume
     VolumeData volume;
 
     //Filters LP,HP
     FilterData filters;
-    
+
     //IR
     IRData IR;
-    
     //EQ
     EQData EQ;
 

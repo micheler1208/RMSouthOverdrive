@@ -1,23 +1,23 @@
 /*
 ==============================================================================
 
-    IR.cpp
+    IRData.cpp
     Author:  micheler1208
 
 ==============================================================================
 */
 
-#include "IR.h"
+#include "IRData.h"
 
 // PREPARE TO PLAY
-void IR::prepareToPlay ()
+void IRData::prepareToPlay ()
 {
-    IR.reset();   
+    reset();   
     isPrepared = true;
 }
 
 // PROCESS FILTER
-void IR::process (juce::AudioBuffer<float>& buffer)
+void IRData::process (juce::AudioBuffer<float>& buffer)
 {
     jassert (isPrepared);
     
@@ -29,7 +29,7 @@ void IR::process (juce::AudioBuffer<float>& buffer)
 
 
 //LOAD IMPULSE RESPONSE
-void IR::loadImpulseResponse()
+void IRData::loadImpulseResponse()
 {
     DBG("Opening File Chooser...");
     juce::FileChooser chooser("Select an Impulse Response File", {}, "*.wav");
@@ -51,12 +51,12 @@ void IR::loadImpulseResponse()
 
 
 // UPDATE PARAMETERS
-void IR::updateParameters ()
+void IRData::updateParameters ()
 {
 }
 
 // RESET
-void IR::reset()
+void IRData::reset()
 {
     convolutionProcessor.reset();
 }

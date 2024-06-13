@@ -34,7 +34,7 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     // Load IR Button
     loadIRButton.setButtonText("Load IR");
     loadIRButton.onClick = [this] {
-        audioProcessor.loadImpulseResponse();
+        audioProcessor.getIR().loadImpulseResponse();
     };
     addAndMakeVisible(&loadIRButton);
 }
@@ -88,30 +88,4 @@ void RMSouthOverdriveAudioProcessorEditor::resized()
     
     loadIRButton.setBounds(getWidth()/2-40, 380, 80, 30);
 
-}
-
-
-// SLIDER CHANGE
-void RMSouthOverdriveAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
-{/*
-    if (slider == &driveSlider)
-    {
-        audioProcessor.setDrive(driveSlider.getValue());
-    }
-    else if (slider == &outputVolumeSlider)
-    {
-        audioProcessor.setOutputVolume(outputVolumeSlider.getValue());
-    }
-    else if (slider == &bassSlider)
-    {
-        audioProcessor.setBass(bassSlider.getValue());
-    }
-    else if (slider == &midSlider)
-    {
-        audioProcessor.setMid(midSlider.getValue());
-    }
-    else if (slider == &trebleSlider)
-    {
-        audioProcessor.setTreble(trebleSlider.getValue());
-    }*/
 }

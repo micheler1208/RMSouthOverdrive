@@ -12,6 +12,10 @@
         <FILE id="rwUvZh" name="DriveData.h" compile="0" resource="0" file="Source/Data/DriveData.h"/>
         <FILE id="gc9XNQ" name="EQData.cpp" compile="1" resource="0" file="Source/Data/EQData.cpp"/>
         <FILE id="MFgvMH" name="EQData.h" compile="0" resource="0" file="Source/Data/EQData.h"/>
+        <FILE id="Ixpqnn" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
+        <FILE id="wgZSJ0" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
+        <FILE id="pPfhPV" name="IRData.cpp" compile="1" resource="0" file="Source/Data/IRData.cpp"/>
+        <FILE id="badUSv" name="IRData.h" compile="0" resource="0" file="Source/Data/IRData.h"/>
         <FILE id="NYQUIZ" name="VolumeData.cpp" compile="1" resource="0" file="Source/Data/VolumeData.cpp"/>
         <FILE id="uhQoww" name="VolumeData.h" compile="0" resource="0" file="Source/Data/VolumeData.h"/>
       </GROUP>

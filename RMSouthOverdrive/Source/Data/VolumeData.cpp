@@ -12,21 +12,21 @@
 // PREPARE TO PLAY
 void VolumeData::prepareToPlay()
 {
-    volume.reset();
+    reset();
     volume = 0.75f;
     
     isPrepared = true;
 }
 
 // PROCESS FILTER
-void VolumeData::process (juce::AudioBuffer<float>& buffer)
+void VolumeData::process (juce::AudioBuffer<float>& buffer, int sample)
 {
     jassert (isPrepared);
     
     auto* inputChannelData = buffer.getReadPointer(0);
     float distortedSignal = inputChannelData[sample];
     
-    float adjustedOutputVolume = std::pow(*volume, 5.0f);
+    float adjustedOutputVolume = std::pow(volume, 5.0f);
     float processedSignal = distortedSignal * adjustedOutputVolume;
 }
 
@@ -39,5 +39,5 @@ void VolumeData::updateValue (const float volumeValue)
 // RESET
 void VolumeData::reset()
 {
-    volume.reset();
+    volume = 0.75f;
 }

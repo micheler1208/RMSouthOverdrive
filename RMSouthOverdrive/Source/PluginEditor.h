@@ -14,8 +14,7 @@
 #include "UI/DriveComponent.h"
 #include "PluginProcessor.h"
 
-class RMSouthOverdriveAudioProcessorEditor  : public juce::AudioProcessorEditor,
-                                                    private juce::Slider::Listener  
+class RMSouthOverdriveAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
     // CONSTRUCTOR AND DESTRUCTOR
@@ -25,7 +24,6 @@ public:
     
     void paint (juce::Graphics&) override;
     void resized() override;
-    void sliderValueChanged(juce::Slider* slider) override;
     void RMSouthOverdriveAudioProcessorEditor::drawLabelledSlider(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& name, juce::Slider& slider);
 
 private:

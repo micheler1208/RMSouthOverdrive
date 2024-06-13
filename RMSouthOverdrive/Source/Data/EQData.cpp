@@ -40,6 +40,8 @@ void EQData::prepareToPlay (juce::dsp::ProcessSpec spec)
     auto trebleCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 2800.0f, 0.707f, std::pow(10.0f, trebleGainDB / 20.0f));
     EQ.get<2>().state = *trebleCoefficients;
     
+    EQ.prepare(spec);
+    
     isPrepared = true;
 }
 
