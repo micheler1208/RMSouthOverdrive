@@ -20,7 +20,7 @@ public:
     
 private:
     float drive;
-    float prevSample;
+    std::vector<float> prevSamples;
     bool isPrepared { false };
     
     //Clipping functions

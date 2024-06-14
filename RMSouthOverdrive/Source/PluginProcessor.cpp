@@ -87,6 +87,18 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
         IR.process(buffer); // Process IR
         EQ.process(buffer); // Process EQ
         volume.process(buffer); // Process volume adjustment
+        
+        // If the input is mono but the output is stereo, duplicate the left channel to the right channel
+        if (totalNumInputChannels == 1 && totalNumOutputChannels == 2)
+        {
+            auto* leftChannel = buffer.getReadPointer(0);
+            auto* rightChannel = buffer.getWritePointer(1);
+
+            for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+            {
+                rightChannel[sample] = leftChannel[sample];
+            }
+        }
     }
 }
 

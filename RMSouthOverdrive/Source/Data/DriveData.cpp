@@ -25,6 +25,12 @@ void DriveData::process(juce::AudioBuffer<float>& buffer)
     auto totalNumInputChannels = buffer.getNumChannels();
     auto numSamples = buffer.getNumSamples();
 
+    // Ensure prevSamples has the correct size
+    if (prevSamples.size() != totalNumInputChannels)
+    {
+        prevSamples.resize(totalNumInputChannels, 0.0f);
+    }
+
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer(channel);
@@ -38,14 +44,14 @@ void DriveData::process(juce::AudioBuffer<float>& buffer)
             float clippedSignal1 = combinedClipping(gainStage1);
 
             // Smoothing between stages
-            float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSample, 0.1f);
+            float smoothedSignal1 = smoothingFilter(clippedSignal1, prevSamples[channel], 0.1f);
 
             // Second stage of distortion
             float gainStage2 = smoothedSignal1 * drive;
             float clippedSignal2 = diodeClipping(gainStage2);
 
             // Smoothing between stages
-            float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSample, 0.1f);
+            float smoothedSignal2 = smoothingFilter(clippedSignal2, prevSamples[channel], 0.1f);
 
             // Third stage of distortion
             float gainStage3 = smoothedSignal2 * drive;
@@ -55,7 +61,7 @@ void DriveData::process(juce::AudioBuffer<float>& buffer)
             channelData[sample] = clippedSignal3;
 
             // Update prevSample for the next iteration
-            prevSample = smoothedSignal2;
+            prevSamples[channel] = smoothedSignal2;
         }
     }
 }
@@ -70,6 +76,7 @@ void DriveData:: updateValue (const float driveValue)
 void DriveData::reset()
 {
     drive = 5.0f;
+    prevSamples.clear();
 }
 
 // Soft Clipping Function
