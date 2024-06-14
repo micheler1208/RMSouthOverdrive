@@ -16,7 +16,8 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     audioProcessor(p), 
     drive(audioProcessor.apvts), 
     EQ(audioProcessor.apvts), 
-    volume(audioProcessor.apvts)
+    volume(audioProcessor.apvts),
+    loadIRButton(audioProcessor.apvts, audioProcessor)
 {
     // Window Size
     setSize(359, 650);
@@ -30,13 +31,8 @@ RMSouthOverdriveAudioProcessorEditor::RMSouthOverdriveAudioProcessorEditor (RMSo
     // VOLUME ENABLE
     addAndMakeVisible(volume);
 
-    
-    // Load IR Button
-    loadIRButton.setButtonText("Load IR");
-    loadIRButton.onClick = [this] {
-        audioProcessor.getIR().loadImpulseResponse();
-    };
-    addAndMakeVisible(&loadIRButton);
+    // LOAD IR ENABLE
+    addAndMakeVisible(loadIRButton);
 }
 
 
@@ -86,6 +82,6 @@ void RMSouthOverdriveAudioProcessorEditor::resized()
 
     volume.setBounds(getWidth()/2 + 53, 50, getWidth() / 2, 150);
     
-    loadIRButton.setBounds(getWidth()/2-40, 380, 80, 30);
+    loadIRButton.setBounds(146, 146, 200, 200);
 
 }

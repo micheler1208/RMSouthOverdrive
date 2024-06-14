@@ -12,6 +12,7 @@
 #include "UI/EQComponent.h"
 #include "UI/VolumeComponent.h"
 #include "UI/DriveComponent.h"
+#include "UI/IRComponent.h"
 #include "PluginProcessor.h"
 
 class RMSouthOverdriveAudioProcessorEditor  : public juce::AudioProcessorEditor
@@ -41,11 +42,11 @@ private:
     //VOLUME
     VolumeComponent volume;
     
-    // IMAGES
+    //IMAGES
     juce::Image backgroundImage;
     
     //LOAD IR BUTTON
-    juce::TextButton loadIRButton;
+    IRComponent loadIRButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RMSouthOverdriveAudioProcessorEditor)
 };

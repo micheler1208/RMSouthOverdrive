@@ -24,6 +24,8 @@
               resource="0" file="Source/UI/CustomLookAndFeelDriveVolume.h"/>
         <FILE id="ZiOTGe" name="CustomLookAndFeelEQ.h" compile="0" resource="0"
               file="Source/UI/CustomLookAndFeelEQ.h"/>
+        <FILE id="fcnuxO" name="CustomLookAndFeelIR.h" compile="0" resource="0"
+              file="Source/UI/CustomLookAndFeelIR.h"/>
         <FILE id="ZS5rog" name="CustomSlider.h" compile="0" resource="0" file="Source/UI/CustomSlider.h"/>
         <FILE id="uiOv3L" name="DriveComponent.cpp" compile="1" resource="0"
               file="Source/UI/DriveComponent.cpp"/>
@@ -31,6 +33,8 @@
               file="Source/UI/DriveComponent.h"/>
         <FILE id="nPu5Zz" name="EQComponent.cpp" compile="1" resource="0" file="Source/UI/EQComponent.cpp"/>
         <FILE id="LhYP5l" name="EQComponent.h" compile="0" resource="0" file="Source/UI/EQComponent.h"/>
+        <FILE id="EjGiIf" name="IRComponent.cpp" compile="1" resource="0" file="Source/UI/IRComponent.cpp"/>
+        <FILE id="LK7cTu" name="IRComponent.h" compile="0" resource="0" file="Source/UI/IRComponent.h"/>
         <FILE id="OjLew6" name="VolumeComponent.cpp" compile="1" resource="0"
               file="Source/UI/VolumeComponent.cpp"/>
         <FILE id="QULEgg" name="VolumeComponent.h" compile="0" resource="0"
