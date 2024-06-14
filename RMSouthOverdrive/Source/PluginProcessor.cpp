@@ -78,17 +78,16 @@ void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buff
         float trebleValue = apvts.getRawParameterValue("TREBLE")->load();
         EQ.updateValues(bassValue, midValue, trebleValue);
 
-        // Process the signal chain
+        
         juce::dsp::AudioBlock<float> block(buffer);
         juce::dsp::ProcessContextReplacing<float> context(block);
 
-        drive.process(buffer); // Process drive effect
-        filters.process(buffer); // Process filters
-        IR.process(buffer); // Process IR
-        EQ.process(buffer); // Process EQ
-        volume.process(buffer); // Process volume adjustment
+        drive.process(buffer);
+        filters.process(buffer);
+        IR.process(buffer);
+        EQ.process(buffer);
+        volume.process(buffer);
         
-        // If the input is mono but the output is stereo, duplicate the left channel to the right channel
         if (totalNumInputChannels == 1 && totalNumOutputChannels == 2)
         {
             auto* leftChannel = buffer.getReadPointer(0);

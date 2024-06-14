@@ -23,7 +23,13 @@ private:
     using Filter = juce::dsp::IIR::Filter<float>;
     using Coefficients = juce::dsp::IIR::Coefficients<float>;
     using FilterDuplicator = juce::dsp::ProcessorDuplicator<Filter, Coefficients>;
+
     float bass, mid, treble;
+
+    double sampleRate;
+
     juce::dsp::ProcessorChain<FilterDuplicator, FilterDuplicator, FilterDuplicator> EQ;
+
+    void updateFilter(int index, float gain, float frequency, float Q);
     bool isPrepared { false };
 };
