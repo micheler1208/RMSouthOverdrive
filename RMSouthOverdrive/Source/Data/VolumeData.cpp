@@ -13,7 +13,7 @@
 void VolumeData::prepareToPlay()
 {
     reset();
-    volume = 0.75f;
+    volume = 0.80f;
     
     isPrepared = true;
 }
@@ -51,5 +51,5 @@ void VolumeData::updateValue (const float volumeValue)
 // RESET
 void VolumeData::reset()
 {
-    volume = 0.75f;
+    volume = 0.80f;
 }

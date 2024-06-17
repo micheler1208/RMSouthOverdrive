@@ -13,7 +13,7 @@
 void DriveData::prepareToPlay()
 {
     reset();
-    drive = 5.0f;
+    drive = 1.5f;
     isPrepared = true;
 }
 
@@ -75,7 +75,7 @@ void DriveData:: updateValue (const float driveValue)
 // RESET
 void DriveData::reset()
 {
-    drive = 5.0f;
+    drive = 1.5f;
     prevSamples.clear();
 }
 

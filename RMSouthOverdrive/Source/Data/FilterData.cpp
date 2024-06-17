@@ -17,8 +17,8 @@ void FilterData::prepareToPlay (juce::dsp::ProcessSpec spec)
     highPassFilter.prepare(spec);
     lowPassFilter.prepare(spec);
     
-    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(spec.sampleRate, 100.0f);
-    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(spec.sampleRate, 11000.0f);
+    *highPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(spec.sampleRate, 90.0f);
+    *lowPassFilter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(spec.sampleRate, 12000.0f);
     
     isPrepared = true;
 }

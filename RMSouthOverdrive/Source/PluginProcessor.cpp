@@ -228,15 +228,15 @@ juce::AudioProcessorValueTreeState::ParameterLayout RMSouthOverdriveAudioProcess
 
 
     // DRIVE
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DRIVE", "Drive", juce::NormalisableRange<float> { 1.0f, 10.0f, }, 5.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DRIVE", "Drive", juce::NormalisableRange<float> { 1.0f, 5.0f, }, 1.5f));
     
     //EQ
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("BASS", "Bass", juce::NormalisableRange<float> { -5.0f, 5.0f, }, 0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("MID", "Mid", juce::NormalisableRange<float> { -5.0f, 5.0f, }, 0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("TREBLE", "Treble", juce::NormalisableRange<float> { -5.0f, 5.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("BASS", "Bass", juce::NormalisableRange<float> { -8.0f, 8.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("MID", "Mid", juce::NormalisableRange<float> { -8.0f, 8.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("TREBLE", "Treble", juce::NormalisableRange<float> { -8.0f, 8.0f, }, 0.0f));
 
     //VOLUME
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("VOLUME", "Volume", 0.0f, 1.0f, 0.75f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("VOLUME", "Volume", 0.0f, 1.0f, 0.8f));
 
 
     return { params.begin(), params.end() };
