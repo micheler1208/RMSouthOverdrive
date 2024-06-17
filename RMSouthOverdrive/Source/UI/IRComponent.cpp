@@ -9,28 +9,33 @@ IRComponent::IRComponent(juce::AudioProcessorValueTreeState& apvt, RMSouthOverdr
         audioProcessor.getIR().loadImpulseResponse();
         };
 
-    curvedLabel.setText("Load Impulse Response", juce::dontSendNotification);
-    curvedLabel.setLookAndFeel(&customLookAndFeelIR);
+    IRLabel.setText("Load Impulse Response", juce::dontSendNotification);
+    IRLabel.setLookAndFeel(&customLookAndFeelIR);
+
+    auto fontStream = juce::Font::getDefaultSansSerifFontName();
+    customFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::timegoing_ttf, BinaryData::timegoing_ttfSize));
+
+    IRLabel.setFont(customFont.withHeight(26.0f));
+    IRLabel.setColour(juce::Label::textColourId, juce::Colour::fromRGB(255, 244, 195));
 
     addAndMakeVisible(loadIRButton);
-    addAndMakeVisible(curvedLabel);
+    addAndMakeVisible(IRLabel);
 }
 
 // DESTRUCTOR
 IRComponent::~IRComponent()
 {
     loadIRButton.setLookAndFeel(nullptr);
-    curvedLabel.setLookAndFeel(nullptr);
+    IRLabel.setLookAndFeel(nullptr);
 }
 
 void IRComponent::paint(juce::Graphics& g)
 {
-    auto bounds = loadIRButton.getBounds().toFloat();
-    customLookAndFeelIR.drawCurvedLabel(g, bounds.toNearestInt(), curvedLabel.getText());
 }
 
 // RESIZED
 void IRComponent::resized()
 {
-    loadIRButton.setBounds(0, 0, 68, 68);
+    loadIRButton.setBounds(40, 0, 68, 68);
+    IRLabel.setBounds(0, 62, 150, 30);
 }

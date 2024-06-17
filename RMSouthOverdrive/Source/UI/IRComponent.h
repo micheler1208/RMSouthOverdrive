@@ -29,7 +29,8 @@ private:
     RMSouthOverdriveAudioProcessor& audioProcessor;
     CustomLookAndFeelIR customLookAndFeelIR;
     juce::TextButton loadIRButton;
-    juce::Label curvedLabel;
+    juce::Label IRLabel;
+    juce::Font customFont;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (IRComponent)
 };

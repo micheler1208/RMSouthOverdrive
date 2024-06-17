@@ -82,6 +82,6 @@ void RMSouthOverdriveAudioProcessorEditor::resized()
 
     volume.setBounds(getWidth()/2 + 53, 50, getWidth() / 2, 150);
     
-    loadIRButton.setBounds(146, 146, 200, 200);
+    loadIRButton.setBounds(106, 146, 200, 200);
 
 }
