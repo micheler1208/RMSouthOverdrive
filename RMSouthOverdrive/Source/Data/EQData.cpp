@@ -37,7 +37,7 @@ void EQData::updateValues(float bassValue, float midValue, float trebleValue)
     mid = midValue;
     treble = trebleValue;
 
-    float adjustedBass = bass * std::abs(bass) / 5.0f;
+    float adjustedBass = bass;
     float adjustedMid = mid * std::abs(mid) / 5.0f;
     float adjustedTreble = treble * std::abs(treble) / 5.0f;
 
@@ -45,7 +45,7 @@ void EQData::updateValues(float bassValue, float midValue, float trebleValue)
     // Ensure gainFactor is always positive and non-zero
     updateFilter(0, std::max(adjustedBass, 0.0001f), 90.0f, 0.707f);   // BASS (Peak Filter)
     updateFilter(1, std::max(adjustedMid, 0.0001f), 500.0f, 0.707f);    // MID (Peak Filter)
-    updateFilter(2, std::max(adjustedTreble, 0.0001f), 3500.0f, 0.707f); // TREBLE (Peak Filter)
+    updateFilter(2, std::max(adjustedTreble, 0.0001f), 3000.0f, 0.707f); // TREBLE (Peak Filter)
 }
 
 // UPDATE FILTER
