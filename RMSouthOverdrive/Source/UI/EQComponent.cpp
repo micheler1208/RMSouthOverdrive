@@ -22,7 +22,7 @@ EQComponent::EQComponent(juce::AudioProcessorValueTreeState& apvts)
     bassSlider.setLookAndFeel(&customLookAndFeelEQ);
     bassSlider.setName("Bass");
     bassSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    bassSlider.setRange(-5.0, 5.0, 0.1);
+    bassSlider.setRange(-8.0, 8.0, 0.1);
     bassSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
     addAndMakeVisible(&bassSlider);
     bassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "BASS", bassSlider);
@@ -31,7 +31,7 @@ EQComponent::EQComponent(juce::AudioProcessorValueTreeState& apvts)
     midSlider.setLookAndFeel(&customLookAndFeelEQ);
     midSlider.setName("Mid");
     midSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    midSlider.setRange(-5.0, 5.0, 0.1);
+    midSlider.setRange(-8.0, 8.0, 0.1);
     midSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
     addAndMakeVisible(&midSlider);
     midAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "MID", midSlider);
@@ -40,7 +40,7 @@ EQComponent::EQComponent(juce::AudioProcessorValueTreeState& apvts)
     trebleSlider.setLookAndFeel(&customLookAndFeelEQ);
     trebleSlider.setName("Treble");
     trebleSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    trebleSlider.setRange(-5.0, 5.0, 0.1);
+    trebleSlider.setRange(-8.0, 8.0, 0.1);
     trebleSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
     addAndMakeVisible(&trebleSlider);
     trebleAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "TREBLE", trebleSlider);

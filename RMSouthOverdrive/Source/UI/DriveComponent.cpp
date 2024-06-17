@@ -21,7 +21,7 @@ DriveComponent::DriveComponent(juce::AudioProcessorValueTreeState& apvts)
     driveSlider.setLookAndFeel(&customLookAndFeelDriveVolume);
     driveSlider.setName("Drive");
     driveSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    driveSlider.setRange(0.0, 10.0, 0.1);
+    driveSlider.setRange(1.0, 5.0, 0.1);
     driveSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
     addAndMakeVisible(&driveSlider);
     driveAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "DRIVE", driveSlider);
