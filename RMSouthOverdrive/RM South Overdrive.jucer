@@ -3,8 +3,7 @@
 <JUCERPROJECT id="MKxq2m" name="RM - South Overdrive" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
               jucerFormatVersion="1" headerPath="C:\D\MIKE-VST\WORKSPACE JUCE\JUCE\modules\asioCommon"
-              pluginVST3Category="Distortion" pluginFormats="buildStandalone,buildVST3"
-              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+              pluginVST3Category="Distortion" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="Sa3sy6" name="RM - South Overdrive">
     <GROUP id="{D5924D41-0551-8D30-2689-0DFBF5CC6BD6}" name="Source">
       <GROUP id="{CD56AF44-4FE9-793C-2A71-2D5D9DBAC94C}" name="Data">
@@ -74,7 +73,7 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"
-               JUCE_ASIO="1"/>
+               JUCE_ASIO="1" JUCE_PLUGINHOST_VST3="1"/>
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>

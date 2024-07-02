@@ -50,7 +50,7 @@ void RMSouthOverdriveAudioProcessor::releaseResources()
 }
 
 
-// NEW PROCESS BLOCK
+// PROCESS BLOCK
 void RMSouthOverdriveAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
